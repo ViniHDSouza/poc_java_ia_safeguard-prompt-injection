@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: poc_java_ia_safeguard-prompt-injection
+  # Faz o Spring ler o arquivo .env como um arquivo properties simples.
+  # Assim mantemos a experiência didática próxima do projeto JavaScript.
+  config:
+    import: optional:file:.env[.properties]
+
+server:
+  port: 8080
+
+app:
+  openrouter:
+    base-url: https://openrouter.ai/api/v1
+    api-key: ${OPENROUTER_API_KEY:}
+    http-referer: ${OPENROUTER_HTTP_REFERER:}
+    x-title: ${OPENROUTER_X_TITLE:IA Devs - Guardrails}
+    chat-model: ${OPENROUTER_CHAT_MODEL:qwen/qwen-2.5-7b-instruct}
+    guardrail-model: ${OPENROUTER_GUARDRAIL_MODEL:openai/gpt-oss-safeguard-20b}
+    temperature: ${TEMPERATURE:0.7}
+    max-tokens: ${MAX_TOKENS:1000}
+
+  guardrails:
+    enabled-by-default: ${GUARDRAILS_ENABLED:true}
+
+  mcp:
+    npx-command: ${MCP_NPX_COMMAND:npx}
+    filesystem-package: ${MCP_FILESYSTEM_PACKAGE:@modelcontextprotocol/server-filesystem@2026.1.14}
+    allowed-directory: ${user.dir}
+    log-events: ${MCP_LOG_EVENTS:false}
+
+logging:
+  level:
+    br.com.poc.safeguardpromptinjection: INFO

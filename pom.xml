@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.16</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>br.com.poc</groupId>
+    <artifactId>poc_java_ia_safeguard-prompt-injection</artifactId>
+    <version>1.0.0</version>
+    <name>poc_java_ia_safeguard-prompt-injection</name>
+    <description>POC educacional sobre Prompt Injection e Safeguards usando Java 21, Spring Boot, LangChain4j e LangGraph4j.</description>
+
+    <properties>
+        <java.version>21</java.version>
+        <langchain4j.version>1.20.2</langchain4j.version>
+        <langchain4j.beta.version>1.20.2-beta30</langchain4j.beta.version>
+        <langgraph4j.version>1.9.3</langgraph4j.version>
+        <!-- LangChain4j 1.20.2 foi publicado usando Jackson 2.22.1.
+             O Spring Boot 3.5.16 gerencia 2.21.x por padrão, então alinhamos o BOM
+             para evitar que o parent faça downgrade das dependências do LangChain4j. -->
+        <jackson-bom.version>2.22.1</jackson-bom.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.bsc.langgraph4j</groupId>
+                <artifactId>langgraph4j-bom</artifactId>
+                <version>${langgraph4j.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- LangChain4j: modelos, PromptTemplate, AI Services e tools -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j</artifactId>
+            <version>${langchain4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-open-ai</artifactId>
+            <version>${langchain4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-mcp</artifactId>
+            <version>${langchain4j.beta.version}</version>
+        </dependency>
+
+        <!-- Equivalente Java ao LangGraph usado no projeto JavaScript original -->
+        <dependency>
+            <groupId>org.bsc.langgraph4j</groupId>
+            <artifactId>langgraph4j-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
